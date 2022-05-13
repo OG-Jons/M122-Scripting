@@ -12,7 +12,6 @@ echo Hello World!
 breakLine
 
 echo Printing Hello World 99 times:
-breakLine
 
 # Create variable called counter and set it to 1
 counter=1
