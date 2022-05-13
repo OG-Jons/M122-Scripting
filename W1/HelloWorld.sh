@@ -18,7 +18,7 @@ counter=1
 
 # Using until to loop printing Hello World! until counter is 99
 # It could also be possible to use a for loop here, but this is just used as an example
-until [ $counter -gt 99 ]
+until [[ $counter -gt 99 ]]
 do
   echo "Hello World #$counter"
   ((counter++))
@@ -43,3 +43,4 @@ breakLine
 exit 0
 
 # It's also possible to stop a script manually, by pressing CTRL+C
+
