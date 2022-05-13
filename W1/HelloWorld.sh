@@ -37,6 +37,9 @@ for (( i = 1; i <= currentMinutes; i++ )); do
 done
 breakLine
 
-# Use the exit command to exit the script, where you can pass an exit code
+
+# Use the exit command to exit the script programmatically, where you can pass an exit code
 # It's possible to use different exit codes with different meanings, check: https://tldp.org/LDP/abs/html/exitcodes.html
 exit 0
+
+# It's also possible to stop a script manually, by pressing CTRL+C
