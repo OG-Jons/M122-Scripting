@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 max_guesses=3
 random_number=$((RANDOM%20+1))
