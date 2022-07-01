@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
+#!/bin/bash
+characters=({a..z} {0..9})
 
-for char1 in {a..z} {0..9}; do
-  for char2 in {a..z} {0..9}; do
-    for char3 in {a..z} {0..9}; do
-      for char4 in {a..z} {0..9}; do
-        echo "Testing: $char1$char2$char3$char4"
-        unzip -oq -P "$char1$char2$char3$char4" vollsicher.zip
-        if [ $? -eq 0 ]; then
-          echo "PW Found"
-          exit 0
-        fi
+for a in "${characters[@]}";
+do
+  for b in "${characters[@]}";
+  do
+      for c in "${characters[@]}";
+      do
+        for d in "${characters[@]}";
+        do
+            echo "$a$b$c$d"
+            if unzip -o -P "$a$b$c$d" "vollsicher.zip" > /dev/null 2>&1; then
+                echo "Password found: $a$b$c$d"
+                exit 0
+            fi
+        done
       done
-    done
   done
 done
