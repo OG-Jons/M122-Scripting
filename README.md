@@ -6,6 +6,8 @@ echo
 
 printf
 
+man
+
 variables
 
 function
@@ -51,6 +53,8 @@ join
 rm
 
 stat
+
+PID
 
 ## Scripts
 
