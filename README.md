@@ -1,60 +1,268 @@
 # M122 - Bash Scripting
 
-## Command references
+## References
 
-echo
+- echo
+    - Prints to the screen
+    - Syntax: echo [string]
+    - Example: echo "Hello World"
 
-printf
+- printf:
+    - Prints to the screen
+    - Syntax: printf [format] [arguments]
+    - Example: `printf "Hello World"`
 
-man
+- man
+    - Shows manual of given command
+    - Syntax: man [command]
+    - Example: `man nano`
 
-variables
+- variables
+    - Save values in variables (e.g string, numbers etc.)
+    - Create: `name="Jonas"`
+    - Usage: `echo $name` will print Jonas to the terminal
 
-function
+- parameters
+  - Pass values to the script
+  - Syntax: `$1`
+  - Example: `echo $1` will print the first parameter to the terminal
 
-if/elif/else
+- function
+    - Save reusable code
+    - Create: `function name() {
+      code
+      }`
+    - Usage: `name` will execute the code
 
-for
+- if/elif/else
+    - Conditional statement, to check if a condition is true or false
+    - Syntax:
+  ```shell
+  if [condition]; then
+      code
+    elif [condition]; then
+      code
+    else
+      code
+    fi
+   ```
 
-while
+    - Example:
+      ```shell
+      name="Jonas"
+      if [$name == "Jonas"]; then
+      echo "Hello Jonas"
+      elif [$name == "Peter"]; then
+      echo "Hello Peter"
+      else
+      echo "Hello World"
+      fi
+      ```
+      - Output:
+        ```
+        Hello Jonas
+        ```
 
-until
+- for
+  - Loop through a list of values
+  - Syntax:
+  ```shell
+    for i in [list]; do
+      code
+    done
+    ```
+  - Example:
+      ```shell
+      for i in $(ls); do
+        echo $i
+      done
+      ```
+      - Output:
+        ```
+        .bash_profile
+        .bashrc
+        .gitconfig
+        .gitignore
+        .vimrc
+        .zshrc
+        ```
 
-date
+- while
+  - Loop while a condition is true
+  - Syntax:
+  ```shell
+    while [condition]; do
+      code
+    done
+    ```
+    - Example:
+        ```shell
+        while [[ $i -lt 10 ]]; do
+            echo $i
+            i=$((i+1))
+        done
+        ```
+        - Output:
+            ```
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+            ```
 
-read
+- until
+  - Loop until a condition is true
+  - Syntax:
+  ```shell
+    until [condition]; do
+      code
+    done
+    ```
+    - Example:
+        ```shell
+        counter=1
+        until [[ $counter -gt 10 ]]
+        do
+            echo $counter
+            counter=$((counter+1))
+        done
+        ```
+        - Output:
+            ```
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+            10
+            ```
 
-exit
+- date
+  - Prints current date and time
+  - Syntax:
+  ```shell
+    date [format]
+    ```
+    - Example:
+        ```shell
+        date +%Y-%m-%d
+        ```
+        - Output:
+            ```
+            2022-01-01
+            ```
 
-break
+- read
+  - Reads input from the user
+  - Syntax:
+  ```shell
+    read [variable]
+    ```
+    - Example:
+        ```shell
+        echo "Please enter your name: "
+        read -r name
+        echo "Hello $name"
+        ```
+        - Output:
+            ```
+            Please enter your name: Jonas
+            Hello Jonas
+            ```
 
-comparators
+- exit
+  - Exits the program
+  - Syntax:
+  ```shell
+    exit [exit code]
+    ```
+    - Example:
+        ```shell
+        exit 0
+        ```
 
-ls
+- break
+  - Breaks out of a loop
+  - Syntax:
+  ```shell
+    break
+    ```
+    - Example:
+        ```shell
+        for i in $(ls); do
+            if [[ $i == "README.md" ]]; then
+                echo "README.md found"
+                break
+            fi
+        done
+        ```
 
-cat
+[//]: # (Show a table of different operators)
+- comparators
 
-nano
 
-find
+- ls
+  - List files in a directory
+  - Syntax:
+  ```shell
+    ls [directory]
+    ```
+    - Example:
+        ```shell
+        ls
+        ```
+        - Output:
+            ```
+            README.md .gitignore etc...
+            ```
 
-wc
+- cat
+  - Concatenates files
+  - Syntax:
+  ```shell
+    cat [file]
+    ```
+  - Example:
+    ```shell
+    cat .gitignore
+    ```
+    - Output:
+        ```
+        .idea/
+        ```
 
-mv
-
-kill
-
-grep
-
-| / >> / >
-
-join
-
-rm
-
-stat
-
-PID
+- nano
+  -  
+- find
+  -  
+- wc
+  -  
+- mv
+  -  
+- cp
+  -  
+- kill
+  -  
+- grep
+  -  
+- | / >> / >
+  -  
+- join
+  -  
+- rm
+  -  
+- stat
+  -  
+- PID
 
 ## Scripts
 
