@@ -427,7 +427,6 @@ ls [arguments] [directory]
 
 ```shell
 ls
-ls -al
 ```
 </td>
 
@@ -435,8 +434,6 @@ ls -al
 
 ```
 README.md
-total 1
--rw-r--r--  1 jonas jonas 9926 Jul  5 11:03 README.md
 ```
 </td>
 
