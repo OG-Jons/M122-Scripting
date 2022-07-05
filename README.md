@@ -310,7 +310,7 @@ Breaks out of a loop
 
 ```shell
 for i in $(ls); do
-    if [[ $i == "README.md" ]]; then
+    if [ $i = "README.md" ]; then
         echo "README.md found"
         break 
     fi
