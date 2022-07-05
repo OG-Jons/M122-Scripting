@@ -313,7 +313,6 @@ for i in $(ls); do
     if [[ $i == "README.md" ]]; then
         echo "README.md found"
         break 
-        # break is used here to stop the loop from continuing
     fi
 done
 ```
