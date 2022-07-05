@@ -630,17 +630,6 @@ Will return true, if $a equals "z*"
    <td><code>if [ -n "$String" ]</code>
    </td>
   </tr>
-</table>
-
-<table>
-  <tr>
-   <td><strong>Operator</strong>
-   </td>
-   <td><strong>Description</strong>
-   </td>
-   <td><strong>Example</strong>
-   </td>
-  </tr>
   <tr>
    <td colspan="3" ><strong>File Operators</strong>
    </td>
@@ -699,17 +688,6 @@ Will return true, if $a equals "z*"
    <td>Checks, if a file is executable
    </td>
    <td><code>if [ -x $filename ]</code>
-   </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-   <td><strong>Operator</strong>
-   </td>
-   <td><strong>Description</strong>
-   </td>
-   <td><strong>Example</strong>
    </td>
   </tr>
   <tr>
