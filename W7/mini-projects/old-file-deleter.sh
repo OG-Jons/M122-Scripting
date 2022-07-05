@@ -29,7 +29,7 @@ for file in $files; do
   fi
 done
 
-echo "Sollen die gennannten Dateien gelöscht werden? (y/n)"
+echo "Sollen die genannten Dateien gelöscht werden? (y/n)"
 read -r answer
 if [ "$answer" == "y" ]; then
   # Delete all the files
