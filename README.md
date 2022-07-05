@@ -6,7 +6,7 @@
 <tr>
 <td><strong>Element</strong>
 </td>
-<td style="min-width:300px"><strong>Description</strong>
+<td style="min-width:20vw"><strong>Description</strong>
 </td>
 <td><strong>Example</strong></td>
 <td><strong>Output (if any)</strong></td>
