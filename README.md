@@ -4,7 +4,7 @@
 
 <table style="width: 100%">
 <tr>
-<td style="width: 100px"><strong>Element</strong>
+<td style="width: 15%"><strong>Element</strong>
 </td>
 <td><strong>Description</strong>
 </td>
@@ -27,7 +27,13 @@ echo "Hello World"
 ```
 
 </td>
-<td>Hello World</td>
+<td>
+
+```
+Hello World
+```
+
+</td>
 </tr>
 <tr>
 <td>
@@ -45,7 +51,13 @@ printf "\n"
 ```
 
 </td>
-<td>((newline))</td>
+<td>
+
+```
+((newline))
+```
+
+</td>
 </tr>
 <tr>
 <td>
@@ -67,7 +79,7 @@ man nano
 </td>
 <td>
 <pre><span style="color: #4E9A06; "><b>NAME</b></span>
-       nano - Nano&apos;s ANOther editor, inspired by Pico
+       nano
 <span style="color: #4E9A06; "><b>SYNOPSIS</b></span>
 <span style="color: #4E9A06; "><b>nano</b></span> [<span style="color: #06989A; "><b>options</b></span>] [[<span style="color: #4E9A06; "><b>
 +</b></span><span style="color: #06989A; "><b>
@@ -90,8 +102,12 @@ echo $name
 
 </td>
 <td>
-Jonas <br>
+
+```
+Jonas 
 Peter
+```
+
 </td>
 </tr>
 <tr>
@@ -109,7 +125,11 @@ bash ./main.sh Hello!
 
 </td>
 <td>
+
+```
 Hello!
+```
+
 </td>
 </tr>
 <tr>
@@ -126,7 +146,11 @@ hello "Jonas"
 
 </td>
 <td>
+
+```
 Hello Jonas
+```
+
 </td>
 </tr>
 <tr>
@@ -153,11 +177,23 @@ fi
 
 </td>
 <td>
+
+```
 Hello Jonas
+```
+
 </td>
 </tr>
 <tr>
-<td>For-loops</td>
+<td>
+
+```shell
+for variable in [array]; do
+    [code]
+done
+```
+
+</td>
 <td>Loop through a list of values</td>
 <td>
 
@@ -181,179 +217,267 @@ done
 
 </td>
 </tr>
+
+<tr>
+<td>
+
+```shell
+while [condition]; do
+    [code]
+done
+```
+
+</td>
+<td>Loop <strong>while</strong> a condition is <strong>true</strong></td>
+<td>
+
+```shell
+while [[ $i -lt 10 ]]; do
+    echo $i
+    i=$((i+1))
+done
+```
+
+</td>
+
+<td>
+
+```
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+  ```shell
+ until [condition]; do
+   [code]
+ done
+ ```
+
+</td>
+<td>Loop <strong>until</strong> a condition is <strong>false</strong></td>
+<td>
+
+```shell
+until [[ $i -gt 10 ]]; do
+    echo $i
+    i=$((i+1))
+done
+```
+
+</td>
+<td>
+
+```
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+```shell
+break
+```
+
+</td>
+<td>
+Breaks out of a loop
+</td>
+<td>
+
+```shell
+for i in $(ls); do
+    if [[ $i == "README.md" ]]; then
+        echo "README.md found"
+        break # break is used here to stop the loop from continuing
+    fi
+done
+```
+</td>
+<td>
+
+Expected output, if README.md is in the directory
+
+```
+README.md found
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+```shell
+date [format]
+```
+
+</td>
+<td>
+Get the current date print it. Optionally pass a format string.
+</td>
+<td>
+
+```shell
+date +%Y-%m-%d
+```
+
+</td>
+<td>
+
+```
+2022-01-01
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+```shell
+read [variable] [arguments]
+```
+
+</td>
+<td>
+Reads input from the user and stores it in a variable.
+</td>
+<td>
+
+```shell
+echo "Please enter your name: "
+read -r name
+echo "Hello $name"
+```
+
+</td>
+<td>
+
+```
+Please enter your name: Jonas
+Hello Jonas
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+```shell
+exit [code]
+```
+
+</td>
+<td>Exits the program, with the given exit code. The exit code can be read afterwards by using the <code>$?</code> variable.</td>
+<td>
+
+main.sh
+```shell
+exit 69
+```
+
+bash
+```shell
+bash ./main.sh
+echo "$?"
+```
+
+</td>
+
+<td>
+
+```
+69
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+```shell
+ls [arguments] [directory]
+```
+
+</td>
+<td>List files in a given directory. If no directory is passed, the current one will be listed.</td>
+<td>
+
+```shell
+ls
+ls -al
+```
+</td>
+
+<td>
+
+```
+README.md
+total 1
+-rw-r--r--  1 jonas jonas 9926 Jul  5 11:03 README.md
+```
+</td>
+
+</tr>
+<tr>
+<td>
+
+```shell
+cat [file]
+```
+
+</td>
+<td>Read out content of files.</td>
+<td>
+
+```shell
+cat .gitignore
+```
+
+</td>
+<td>
+
+```
+.idea/
+```
+
+</td>
+</tr>
 </table>
 
-- while
-    - Loop while a condition is true
-    - Syntax:
-  ```shell
-    while [condition]; do
-      code
-    done
-    ```
-    - Example:
-        ```shell
-        while [[ $i -lt 10 ]]; do
-            echo $i
-            i=$((i+1))
-        done
-        ```
-        - Output:
-            ```
-            1
-            2
-            3
-            4
-            5
-            6
-            7
-            8
-            9
-            ```
-
-- until
-    - Loop until a condition is true
-    - Syntax:
-  ```shell
-    until [condition]; do
-      code
-    done
-    ```
-    - Example:
-        ```shell
-        counter=1
-        until [[ $counter -gt 10 ]]
-        do
-            echo $counter
-            counter=$((counter+1))
-        done
-        ```
-        - Output:
-            ```
-            1
-            2
-            3
-            4
-            5
-            6
-            7
-            8
-            9
-            10
-            ```
-
-- date
-    - Prints current date and time
-    - Syntax:
-  ```
-    date [format]
-    ```
-    - Example:
-        ```shell
-        date +%Y-%m-%d
-        ```
-        - Output:
-            ```
-            2022-01-01
-            ```
-
-- read
-    - Reads input from the user
-    - Syntax:
-  ```shell
-    read [variable]
-    ```
-    - Example:
-        ```shell
-        echo "Please enter your name: "
-        read -r name
-        echo "Hello $name"
-        ```
-        - Output:
-            ```
-            Please enter your name: Jonas
-            Hello Jonas
-            ```
-
-- exit
-    - Exits the program
-    - Syntax:
-  ```shell
-    exit [exit code]
-    ```
-    - Example:
-        ```shell
-        exit 0
-        ```
-
-- break
-    - Breaks out of a loop
-    - Syntax:
-  ```shell
-    break
-    ```
-    - Example:
-        ```shell
-        for i in $(ls); do
-            if [[ $i == "README.md" ]]; then
-                echo "README.md found"
-                break
-            fi
-        done
-        ```
-
-- ls
-    - List files in a directory
-    - Syntax:
-  ```shell
-    ls [directory]
-    ```
-    - Example:
-        ```shell
-        ls
-        ```
-        - Output:
-            ```
-            README.md .gitignore etc...
-            ```
-
-- cat
-    - Concatenates files
-    - Syntax:
-  ```shell
-    cat [file]
-    ```
-    - Example:
-      ```shell
-      cat .gitignore
-      ```
-        - Output:
-            ```
-            .idea/
-            ```
-
 - nano
-  -  
 - find
-  -  
 - wc
-  -  
 - mv
-  -  
 - cp
-  -  
 - kill
-  -  
 - grep
-  -  
 - | / >> / >
-  -  
 - join
-  -  
 - rm
-  -  
 - stat
-  -  
 - PID
 
 ## Operators
