@@ -1,18 +1,17 @@
 #!/bin/bash
-echo "Geben Sie den Pfad an: "
+echo "Enter the directory: "
 read -r path
 # Check if path exists
 if [ ! -d "$path" ]; then
-  echo "Pfad $path existiert nicht"
+  echo "$path does not exist"
   exit 1
 fi
 
-
-echo "Ab welchem Datum sollte gelöscht werden (JJJJ-MM-TT): "
+echo "From which date should the files be deleted (JJJJ-MM-TT): "
 read -r date
 # Check if date is valid
 if ! [[ $date =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-  echo "Datum $date ist ungültig"
+  echo "Date $date is invalid"
   exit 1
 fi
 
@@ -29,7 +28,7 @@ for file in $files; do
   fi
 done
 
-echo "Sollen die genannten Dateien gelöscht werden? (y/n)"
+echo "Should the files be deleted? (y/n)"
 read -r answer
 if [ "$answer" == "y" ]; then
   # Delete all the files
@@ -37,5 +36,5 @@ if [ "$answer" == "y" ]; then
     rm "$file"
   done
 
-  echo "${#deletable_files[@]} Dateien wurden gelöscht"
+  echo "${#deletable_files[@]} files were deleted"
 fi

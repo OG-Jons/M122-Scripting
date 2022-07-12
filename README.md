@@ -23,7 +23,7 @@ echo [string]
 <td>
 
 ```shell
-echo "Hello World"
+$ echo "Hello World"
 ```
 
 </td>
@@ -73,7 +73,7 @@ Opens the manual of the given command, if it exists
 <td>
 
 ```shell
-man nano
+$ man nano
 ```
 
 </td>
@@ -120,7 +120,7 @@ echo $1
 ```
 
 ```shell
-bash ./main.sh Hello!
+$ bash ./main.sh Hello!
 ```
 
 </td>
@@ -341,7 +341,7 @@ Get the current date print it. Optionally pass a format string.
 <td>
 
 ```shell
-date +%Y-%m-%d
+$ date +%Y-%m-%d
 ```
 
 </td>
@@ -400,8 +400,8 @@ exit 69
 
 bash
 ```shell
-bash ./main.sh
-echo "$?"
+$ bash ./main.sh
+$ echo "$?"
 ```
 
 </td>
@@ -426,7 +426,7 @@ ls [arguments] [directory]
 <td>
 
 ```shell
-ls
+$ ls
 ```
 </td>
 
@@ -450,7 +450,7 @@ cat [file]
 <td>
 
 ```shell
-cat .gitignore
+$ cat .gitignore
 ```
 
 </td>
@@ -462,20 +462,203 @@ cat .gitignore
 
 </td>
 </tr>
-</table>
 
-- nano
-- find
-- wc
-- mv
-- cp
-- kill
-- grep
-- | / >> / >
-- join
-- rm
-- stat
-- PID
+<tr>
+<td>
+
+```shell
+nano [file]
+```
+</td>
+<td>
+Edit files in a text editor.
+</td>
+<td>
+
+```shell
+$ nano .gitignore
+# Opens file to be edited and saved
+```
+
+</td>
+<td>
+    
+```
+.idea/
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+```shell
+find [directory] [arguments]
+```
+</td>
+
+<td>
+Search for files in a directory hierarchy
+</td>
+<td>
+
+```shell
+$ find . -name "*.sh"
+```
+
+</td>
+
+<td>
+
+```
+All files with the extension .sh...
+
+./W1/HelloWorld.sh
+./W2/number-guesser.sh
+```
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+```shell
+mkdir [directory]
+```
+
+</td>
+
+<td>
+Creates a directory
+</td>
+
+<td>
+
+```shell
+$ mkdir new-directory
+```
+</td>
+
+<td>
+New directory created called new-directory
+</td>
+
+</tr>
+
+<tr>
+<td>
+
+```shell
+mv [file] [directory]
+```
+</td>
+
+<td>
+Move files or directories
+</td>
+
+<td>
+
+```shell
+$ mv .gitignore new-directory
+```
+</td>
+
+<td>
+.gitignore moved into new-directory
+</td>
+
+</tr>
+
+<tr>
+<td>
+
+```shell
+rm [file]
+```
+</td>
+
+<td>
+Delete a file or directory
+</td>
+
+<td>
+
+```shell
+$ rm -rf new-directory
+```
+</td>
+
+<td>
+Delete directory new-directory
+-rf to delete all files inside as well
+</td>
+</tr>
+<tr>
+<td>
+
+```shell
+|
+```
+
+</td>
+<td>
+Use pipes to connect commands. Take the output from the first command and pass it as input to the second command.
+</td>
+
+<td>
+
+```shell
+$ echo "Hello" | wc -c
+```
+</td>
+
+<td>
+
+```
+6
+```
+
+The count is 6, since echo adds a newline at the end, which is also counted.
+
+</td>
+
+</tr>
+<tr>
+<td>
+
+```shell
+>>
+```
+
+</td>
+<td>
+This is used to append to a file. If the file doesn't exist, it will be created.
+</td>
+
+<td>
+
+```shell
+$ echo "Hello, person reading this!" >> hello.txt
+```
+</td>
+
+<td>
+
+```shell
+$ cat hello.txt
+```
+
+```
+Hello, person reading this!
+```
+
+</td>
+
+</tr>
+</table>
 
 ## Operators
 
@@ -743,6 +926,55 @@ Will return true, if $a equals "z*"
 ## Scripts
 
 ### Number Guesser
+
+```shell
+#!/bin/bash
+## Number Guesser
+## Author: Jonas Marschall
+## Date: 15.06.2022
+## 
+## This script will ask the user to guess a number between 1 and 100.
+##
+
+max_guesses=3
+random_number=$((RANDOM%20+1))
+
+# Loop until the user has guessed the number or has run out of guesses
+for (( i=1 ; i <= max_guesses ; i++ )) ; do
+
+    echo "This is attempt #$i"
+
+    # Ask the user to guess the number
+    read -r -p "Pick a number between 1 and 20  " guess
+
+    echo "You guessed $guess"
+
+    # Check if the user guessed the number
+    if [ "$random_number" -eq "$guess" ]; then
+        echo "You guessed correctly!"
+        exit 0
+        break
+    fi
+    
+    # Check if the user guessed higher than the number (-ge == greater or equal)
+    if [ "$i" -ge $max_guesses ] ; then
+        echo "You have exceeded $max_guesses tries and lost!"
+        echo "The correct number was $random_number"
+        exit 1
+        break
+
+    # Check if the user guessed lower than the number (-le == less or equal)
+    elif [ "$random_number" -gt "$guess" ]; then
+        echo "The hidden number is higher!"
+
+    # Check if the user guessed higher than the number (-le == less or equal)
+    elif [ "$random_number" -lt "$guess" ]; then
+        echo "The hidden number is lower!"
+    fi
+
+done
+
+```
 
 ### Extra exercises \#4, 5, 8, 15, 16
 
