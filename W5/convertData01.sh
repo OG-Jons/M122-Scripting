@@ -1,3 +1,11 @@
+#!/bin/bash -e
+## Data Converter
+## Author: Jonas Marschall
+## Date: 24.06.2022
+##
+## This script takes an input file and converts it to a new file with specific formatting.
+##
+
 inputFile="$1"
 outputFile="$2"
 

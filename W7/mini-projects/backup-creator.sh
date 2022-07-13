@@ -1,4 +1,12 @@
 #!/bin/bash -e
+## SCP Backup creator
+## Author: Jonas Marschall
+## Date: 07.07.2022
+##
+## This script will zip a given directory and copy it to a remote server, using credentials from the user.
+## It will then ask if the local copy should be deleted.
+##
+
 
 echo -n "Path to the directory you want to create a backup of: "
 read -r backupPath

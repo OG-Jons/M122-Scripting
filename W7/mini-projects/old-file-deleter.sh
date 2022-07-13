@@ -1,4 +1,13 @@
 #!/bin/bash
+## Old file deleter
+## Author: Jonas Marschall
+## Date: 07.07.2022
+##
+## This script will ask the user to enter a directory and a date.
+## It will then delete all files in the directory that are older than the date.
+## Before deleting, it will list the files and ask the user if he/she wants to delete them.
+##
+
 echo "Enter the directory: "
 read -r path
 # Check if path exists

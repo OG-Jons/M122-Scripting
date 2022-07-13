@@ -1,9 +1,5 @@
 #!/bin/bash
-# Erstellen Sie das Startskript für das Starten und Stoppen einer Anwendung (z.B. MySQL, MongoDB).
-# bottom line you just have to check if your $1 is start, stop or reload
-# if start you run the program in forking mode, write the pid to a pidfile and quit
-# if stop or reload you get the pid from the pidfile and send SIGTERM or SIGHUP to it
-# run the daemon as its own user
+##
 
 operationType="$1"
 processToStart="$2"

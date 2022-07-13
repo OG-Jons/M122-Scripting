@@ -976,10 +976,326 @@ done
 
 ```
 
-### Extra exercises \#4, 5, 8, 15, 16
+### Extra exercises \#4, \#5, \#8, \#15, \#16
+
+```shell
+#!/bin/bash -e
+## Permission checker (Exercise #4)
+## Author: Jonas Marschall
+## Date: 15.06.2022
+##
+## The file_path is checked, if it exists (-f) and if the user has writing permission (-w).
+##
+
+if [ -f "file_path" ]; then
+    echo "file_path passwords are enabled"
+    if [ -w "file_path" ]; then
+        echo "Sie haben die Berechtigung, \"file_path\" zu bearbeiten."
+    else
+        echo "Sie haben NICHT die Berechtigung, \"file_path\" zu bearbeiten."
+    fi
+fi
+```
+
+
+```shell
+#!/bin/bash -e
+## Arrays (Exercise #5)
+## Author: Jonas Marschall
+## Date: 15.06.2022
+##
+## Creates an array and prints it, with each on a new line
+##
+
+declare -a Creatures=("Mensch" "Bär" "Schwein" "Hund" "Katze" "Schaf")
+
+printf "%s\n" "${Creatures[@]}"
+
+```
+
+```shell
+#!/bin/bash -e
+## Type of file checker (Exercise #6, #7 & #8)
+## Author: Jonas Marschall
+## Date: 15.06.2022
+##
+## Pass as many arguments as you want.
+## Script will loop through, and check if it is a file, directory or special file / device.
+##
+
+# Loop through all parameters
+for par in "$@"
+do
+  # Check if string entered is not empty
+  if [ -n "$par" ]; then
+      echo "Checking if the given parameter is a directory or file."
+      
+      # Check if the parameter is a directory
+      # If it exists, display contents of directory
+      if [ -d "$par" ]; then
+          echo "The given parameter is a directory."
+          echo "The files in the directory are:"
+          ls -l "$par"
+          
+      # Check if the parameter is a file
+      # If it exists, display contents of file, using cat
+      elif [ -f "$par" ]; then
+          echo "The given parameter is a file."
+          echo "The file content is:"
+          cat "$par"
+          
+      # Check if the parameter is a special file / device
+      elif [ -c "$par" ]; then
+          echo "It's a special file or a device."
+          
+      # Show a message, if it's none of them
+      else
+          echo "The given parameter is not a directory, file or special file."
+      fi
+      
+      # Show file-type
+      file "$par"
+      
+  # Show a message, if nothing was parsed
+  else
+      echo "You did not pass anything"
+  fi
+done
+
+```
+
+```shell
+#!/bin/bash -e
+## File-type renaming script (Exercise #15)
+## Author: Jonas Marschall
+## Date: 15.06.2022
+##
+## The script will ask the user to enter a file-prefix and a date. Additionally, it will prompt for the file-type.
+## Then the script will rename all the files, with the given file-type, in the current directory,
+## with the given prefix and date.
+##
+
+echo "Bitte geben Sie ein Präfix ein (Standardmäßig das heutige Datum):"
+
+read -r prefix
+
+if [[ -z $prefix ]]; then
+  prefix=$(date +%Y-%m-%d)
+fi
+
+echo "Geben sie die Dateierweiterung ein (Standardmäßig \"jpg\"):"
+
+read -r suffix
+
+if [[ -z $suffix ]]; then
+  suffix="jpg"
+fi
+
+for file in *."$suffix"; do
+  echo "Alter name: $file"
+  echo "Neuer Name: $prefix-$file"
+  mv "$file" "$prefix-$file"
+done
+
+```
+
+```shell
+#!/bin/bash
+## Process starter, stopper and reloader (Exercise #16)
+## Author: Jonas Marschall
+## Date: 16.06.2022
+##
+## The user has to give an operation type (start, stop or reload) and a process name.
+## The script will then start, stop or reload the process.
+## The process-id is stored in a file, so the script can stop the process later.
+##
+
+operationType="$1"
+processToStart="$2"
+
+if [ "$operationType" == "start" ]; then
+  echo "Starting $processToStart"
+  $processToStart &
+  echo $! > "/run/user/$UID/$processToStart.pid"
+  exit 0
+elif [ "$operationType" == "stop" ]; then
+  echo "Stopping $processToStart"
+  pid=$(cat "/run/user/$UID/$processToStart.pid")
+  kill "$pid"
+  exit 0
+elif [ "$operationType" == "reload" ]; then
+  echo "Reloading $processToStart"
+  pid=$(cat "/run/user/$UID/$processToStart.pid")
+  kill -HUP "$pid"
+  exit 0
+else
+  echo "Usage: $0 {start|stop|reload}"
+  exit 1
+fi
+
+```
 
 ### Data Converter
 
-### Mini Projects
+```shell
+#!/bin/bash -e
+## Data Converter
+## Author: Jonas Marschall
+## Date: 24.06.2022
+##
+## This script takes an input file and converts it to a new file with specific formatting.
+##
+
+inputFile="$1"
+outputFile="$2"
+
+# Check if input and output is not zero length
+if [ -z "$inputFile" ] || [ -z "$outputFile" ]; then
+  echo "Usage: $0 <input file> <output file>"
+  exit 1
+fi
+
+# Check if inputFile exists
+if [ ! -f "$inputFile" ]; then
+  echo "Input file does not exist"
+  exit 1
+fi
+
+# Check if outputFile exists and delete if it does
+if [ -f "$outputFile" ]; then
+  echo "Output file exists, deleting..."
+  rm -i "$outputFile"
+fi
+
+echo "Transforming $inputFile into $outputFile..."
+
+# Transform data
+# -a force grep to read as text-file
+# -w check for 2 at the beginning of the line and remove if it doesn't
+# | pipe the output to the next command
+# -v "^2  26" filter out lines that start with 2<tab>26
+# cut -f3-4 -> cut out everything but the third and fourth columns
+# use Regex to remove all occurrences where it *doesn't* have a character and then 7 numbers
+grep -a -w "^2" "$inputFile" | grep -a -v -w "^2  26" | cut -f3-4 | grep -a -v "[A-Z][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" > "$outputFile"
+
+exit 0
+```
+
+### Remote server checker
+
+```shell
+#!/bin/bash -e
+## Check remote server
+## Author: Jonas Marschall
+## Date: 07.07.2022
+##
+## This script will take in a hostname and check if the server is online.
+##
+
+
+echo -n "Enter the host of the server you want to check: "
+read -r host
+ping -q -c 1 "$host" > /dev/null 2>&1 && echo "$host is online!" || echo "$host is offline!"
+```
+
+### Backup creator
+
+```shell
+#!/bin/bash -e
+## SCP Backup creator
+## Author: Jonas Marschall
+## Date: 07.07.2022
+##
+## This script will zip a given directory and copy it to a remote server, using credentials from the user.
+## It will then ask if the local copy should be deleted.
+##
+
+
+echo -n "Path to the directory you want to create a backup of: "
+read -r backupPath
+
+echo -n "Enter the host of the SCP server: "
+read -r host
+
+echo -n "Enter the user of the SCP server: "
+read -r user
+
+echo -n "Enter the password of the SCP server (optional): "
+read -sr password
+
+echo "Zipping: "
+zip -r backup.zip "$backupPath"
+echo "Zipping done. Zipped to backup.zip"
+
+echo "Uploading: "
+if [[ -n $password ]]; then
+  scp backup.zip $user@$host:backup.zip
+else
+  scp backup.zip $user@$host:backup.zip -p $password
+fi
+echo "Uploading done. Backup.zip uploaded to $host"
+
+echo "Do you want to delete the archive locally? (y/n)"
+read -r delete
+if [ "$delete" = "y" ]; then
+  rm backup.zip
+  echo "Deleted backup.zip"
+fi
+# Alternative is using rm -i to delete the file and requesting confirmation. But it's nicer for the user this way.
+```
+
+### Old file deleter
+
+```shell
+#!/bin/bash
+## Old file deleter
+## Author: Jonas Marschall
+## Date: 07.07.2022
+##
+## This script will ask the user to enter a directory and a date.
+## It will then delete all files in the directory that are older than the date.
+## Before deleting, it will list the files and ask the user if he/she wants to delete them.
+##
+
+echo "Enter the directory: "
+read -r path
+# Check if path exists
+if [ ! -d "$path" ]; then
+  echo "$path does not exist"
+  exit 1
+fi
+
+echo "From which date should the files be deleted (JJJJ-MM-TT): "
+read -r date
+# Check if date is valid
+if ! [[ $date =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+  echo "Date $date is invalid"
+  exit 1
+fi
+
+# Read out all the files in the given directory
+files=$(find "$path" -type f)
+deletable_files=()
+#find "$path" -type f
+# Loop through all the files
+for file in $files; do
+  # Check if the file is older than the given date
+  if [[ $(stat -c %Y "$file") -lt $(date -d "$date" +%s) ]]; then
+    deletable_files+=("$file")
+    echo "$file"
+  fi
+done
+
+echo "Should the files be deleted? (y/n)"
+read -r answer
+if [ "$answer" == "y" ]; then
+  # Delete all the files
+  for file in "${deletable_files[@]}"; do
+    rm "$file"
+  done
+
+  echo "${#deletable_files[@]} files were deleted"
+fi
+```
 
 ### Best Practices
