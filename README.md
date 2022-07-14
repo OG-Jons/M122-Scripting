@@ -1,5 +1,17 @@
 # M122 - Bash Scripting
 
+- [M122 - Bash Scripting](#m122---bash-scripting)
+  * [References](#references)
+  * [Operators](#operators)
+  * [Scripts](#scripts)
+    + [Number Guesser](#number-guesser)
+    + [Extra exercises \#4, \#5, \#8, \#15, \#16](#extra-exercises-4-5-8-15-16)
+    + [Data Converter](#data-converter)
+    + [Remote server checker](#remote-server-checker)
+    + [Backup creator](#backup-creator)
+    + [Old file deleter](#old-file-deleter)
+    + [Best Practices](#best-practices)
+
 ## References
 
 <table style="width: 100%">
@@ -976,7 +988,7 @@ done
 
 ```
 
-### Extra exercises \#4, \#5, \#8, \#15, \#16
+### Extra exercises \#4, \#5, \#8, \#15, \#16         
 
 ```shell
 #!/bin/bash -e
