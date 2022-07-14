@@ -11,6 +11,7 @@
     + [Backup creator](#backup-creator)
     + [Old file deleter](#old-file-deleter)
     + [Best Practices](#best-practices)
+    + [Security checklist](#security-checklist)
 
 ## References
 
@@ -1311,3 +1312,133 @@ fi
 ```
 
 ### Best Practices
+
+```shell
+#!/bin/bash
+## Best Practices
+## Author: Jonas Marschall
+## Date: 14.07.2022
+##
+## This script was handed in late, because i was occupied with sickness
+## It is not meant to be perfect, but to be a good example of best practices
+## for bash scripting.
+##
+
+set -o errexit # Stop the script if an error occurs (i.E non-zero exit code)
+set -o nounset # Stop the script if an undefined variable is used
+set -o pipefail # Stop the script if a command fails in a pipe
+
+# Set some default exit codes
+FILE_NOT_FOUND=404
+
+# Logging functions, to be used in the script and give the user feedback
+# This will not work as is, because the variables are not bound
+function __msg_error() {
+    [[ "${ERROR}" == "1" ]] && echo -e "[ERROR]: $*"
+}
+
+function __msg_debug() {
+    [[ "${DEBUG}" == "1" ]] && echo -e "[DEBUG]: $*"
+}
+
+function __msg_info() {
+    [[ "${INFO}" == "1" ]] && echo -e "[INFO]: $*"
+}
+
+__msg_error "Error messages are enabled"
+__msg_debug "Debugging is enabled"
+__msg_info "Info messages are enabled"
+
+
+function handle_exit() {
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Script failed with exit code $exit_code"
+        exit $exit_code
+    fi
+}
+
+# Listen to signals and handle them with the handle_exit function and exit the script
+trap handle_exit 0 SIGHUP SIGINT SIGTERM SIGQUIT SIGABRT
+
+# Test the default exit codes set above
+function read_file() {
+  if "file_that_does_not_exist.txt"; then
+    return "$FILE_NOT_FOUND"
+  fi
+}
+```
+
+### Security Checklist
+
+1. Handling all errors in the script.
+
+To make sure, that no unexpected errors interfere with the script, you should always keep an eye on non-zero exit codes.
+To do this, you can use `set -o errexit` in the script, which will exit the script, as soon as an error occurs.
+
+To keep an eye on undefined variables, you can use `set -o nounset` in the script.
+
+Lastly, `set -o pipefail` will **only** return a zero exit-code, if all commands in a pipeline succeed.
+
+2. Preventing malicious scripts from users.
+
+When asking a user for input, they could potentially enter a script, which will then be executed.
+This could cause tremendous damage to the system.
+
+To overcome this issue, you should always encase the variables in quotes.
+
+An example of that is:
+
+```shell
+echo -n "Enter the path to the file: "
+read -r path
+
+# Using quotes here, prevents the input from being executed. It parses it as a string.
+cat "$path"
+```
+
+3. Check dependencies
+
+To make sure, that all dependencies are installed, you should check if the dependencies are installed, before executing the main part of a script.
+
+An example of that could be:
+
+```shell
+# Create an array of dependencies
+dependencies=(
+  "git"
+  "curl"
+  "wget"
+)
+  
+# Check if all dependencies are installed
+for dependency in "${dependencies[@]}"; do
+  if ! command -v "$dependency" >/dev/null 2>&1; then
+    echo "Dependency $dependency is not installed"
+    exit 1
+  fi
+done
+```
+
+4. Using the proper shell
+
+There are more shells than just bash. Some examples are: `zsh`, `ksh` and `sh`. Each with their own set of pros and cons.
+
+What to do, if you want to create a bash and specify, which shell you want to use?
+
+```shell
+# Define the shell to be bash
+#!/bin/bash
+
+# This can be changed, so for some others it would be:
+#!/bin/zsh
+#!/bin/ksh
+#!/bin/sh
+```
+These should **always** be put at the top of the script, so that they are executed first.
+
+5. Using proper code-style
+
+To keep the code clean, you should use a proper style-guide, to help you keep an overview of the code.
+An example, of a guide you could use, is the `Shell Style Guide` from Google.
+A link to that would be here: [https://google.github.io/styleguide/shell.html](https://google.github.io/styleguide/shell.html)
