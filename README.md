@@ -1,5 +1,5 @@
 # M122 - Bash Scripting
-## Jonas Marschall - 15.07.2022
+### Jonas Marschall - 15.07.2022
 
 - [M122 - Bash Scripting](#m122---bash-scripting)
   * [References](#references)
